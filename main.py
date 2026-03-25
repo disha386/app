@@ -91,19 +91,25 @@ st.markdown("<br><br>", unsafe_allow_html=True)
 # ================= CONTENT =================
 st.title("Constructing Certinity with BIM Technology")
 
-video_path = r"C:\Users\Admin\Downloads\pinnacle.mp4\pinnacle-infotech-latest.mp4"
+import streamlit as st
+import streamlit.components.v1 as components
 
-if os.path.exists(video_path):
-    try:
-        with open(video_path, "rb") as video_file:
-            video_bytes = video_file.read()
-            st.video(video_bytes)
-    except Exception as e:
-        st.error(f"❌ Error loading video: {e}")
-else:
-    st.warning(f"⚠️ Video not found at: {video_path}")
+st.title("Constructing Certinity with BIM Technology")
 
+video_url = "https://res.cloudinary.com/dnodncslz/video/upload/v1774435343/pinnacle-infotech-latest_h3qbk3.mp4"
 
+components.html(f"""
+<div style="width:100%;">
+
+    <video autoplay muted loop playsinline 
+        style="width:100%; height:auto; border-radius:12px;" 
+        controls>
+        <source src="{video_url}" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+
+</div>
+""", height=520)
 
 
 
