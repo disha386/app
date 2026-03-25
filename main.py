@@ -94,7 +94,6 @@ st.title("Constructing Certinity with BIM Technology")
 import streamlit as st
 import streamlit.components.v1 as components
 
-st.title("Constructing Certinity with BIM Technology")
 
 video_url = "https://res.cloudinary.com/dnodncslz/video/upload/v1774435343/pinnacle-infotech-latest_h3qbk3.mp4"
 
