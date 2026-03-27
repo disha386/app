@@ -69,7 +69,7 @@ components.html(f"""
     align-items:center;
     justify-content:space-between;
     background:#f8f8f8;
-    padding:6px 20px;
+    padding:10px 25px;
     font-family:sans-serif;
 }}
 
@@ -176,7 +176,7 @@ components.html(f"""
 st.markdown("""
 <div style="
     margin-top:20px;
-    margin-left:0px;
+    padding-left:25px;   /* 🔥 MATCH NAVBAR */
     width:100%;
     font-size:52px;
     font-family: Georgia, serif;
@@ -194,17 +194,6 @@ st.markdown("""
 
 
 
-
-
-
-
-
-
-
-
-
-
-
 import streamlit as st
 import streamlit.components.v1 as components
 
@@ -214,6 +203,8 @@ video_url = "https://res.cloudinary.com/dnodncslz/video/upload/v1774435343/pinna
 components.html(f"""
 <div style="
     width:100%;
+    padding-left:25px;   /* 🔥 MATCH NAVBAR */
+    padding-right:25px;  /* 🔥 MATCH RIGHT SIDE */
     margin-top:20px;
 ">
 
@@ -228,6 +219,18 @@ components.html(f"""
 
 </div>
 """, height=520)
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 # ================= IMAGE SECTION =================
@@ -261,10 +264,17 @@ html = f"""
             Discover Pinnacle
         </h2>
 
-        <p style='font-size:16px; line-height:1.7;'>
-        Pinnacle is your gateway to innovative solutions and transformative experiences.
-        We specialize in delivering excellence across technology, design, and strategy.
-        </p>
+        <p style='font-size:16px; line-height:1.7; margin-bottom:20px;'>
+Pinnacle is your gateway to innovative solutions and transformative experiences. We specialize in delivering excellence across technology, design, and strategy.
+</p>
+
+<p style='font-size:16px; line-height:1.7;'>
+Our 30+ years of expertise drive excellence in the Design, Preconstruction, Construction Management, Digital Twin, and Facilities Management.
+</p>
+
+
+       
+
 
         <a href="#" style="
             display:inline-block;
@@ -332,14 +342,6 @@ components.html(html, height=520)
 
 
 
-
-
-
-
-
-
-
-
 # ================= MOVING IMAGE BAR =================
 
 
@@ -347,35 +349,58 @@ components.html(html, height=520)
 components.html("""
 <div style="
     width:100%;
-    height:140px;
     background:#e0e0e0;
     border-radius:12px;
     margin:60px 0;
-    display:flex;
-    align-items:center;
-    overflow:hidden;
+    position:relative;
+    box-shadow:0 8px 20px rgba(0,0,0,0.1);
+    padding:40px 25px 40px 25px;   /* 🔥 SAME LEFT PADDING */
 ">
 
+    <!-- 🔵 TITLE -->
     <div style="
+        position:absolute;
+        top:20px;
+        left:25px;   /* 🔥 SAME AS PADDING */
+        font-size:24px;
+        font-weight:700;
+        color:#002366;
+        font-family: Georgia, serif;
+    ">
+        Industry Associations
+    </div>
+
+    <!-- 🟦 LOGO ALIGNMENT -->
+    <div style="
+        width:100%;
+        height:110px;
         display:flex;
         align-items:center;
-        gap:50px;
-        animation: scroll 25s linear infinite;
+        overflow:hidden;
     ">
 
-        <!-- IMAGES -->
-        <img src="https://res.cloudinary.com/dnodncslz/image/upload/v1774440686/ahk_u5d2h6.webp" style="height:60px; transform: translateY(-5px);">
-        <img src="https://res.cloudinary.com/dnodncslz/image/upload/v1774441251/npca_vypoo6.webp" style="height:60px; transform: translateY(-5px);">
-        <img src="https://res.cloudinary.com/dnodncslz/image/upload/v1774441161/buildingsmart_d7yder.webp" style="height:60px; transform: translateY(-5px);">
-        <img src="https://res.cloudinary.com/dnodncslz/image/upload/v1774441027/building_mqyiow.webp" style="height:60px; transform: translateY(-5px);">
-        <img src="YOUR_5TH_IMAGE_URL" style="height:60px; transform: translateY(-5px);">
+        <!-- 🟢 MOVING LOGOS -->
+        <div style="
+            display:flex;
+            align-items:center;
+            gap:80px;
+            animation: scroll 25s linear infinite;
+        ">
 
-        <!-- repeat -->
-        <img src="https://res.cloudinary.com/dnodncslz/image/upload/v1774440686/ahk_u5d2h6.webp" style="height:60px; transform: translateY(-5px);">
-        <img src="https://res.cloudinary.com/dnodncslz/image/upload/v1774441251/npca_vypoo6.webp" style="height:60px; transform: translateY(-5px);">
-        <img src="https://res.cloudinary.com/dnodncslz/image/upload/v1774441161/buildingsmart_d7yder.webp" style="height:60px; transform: translateY(-5px);">
-        <img src="https://res.cloudinary.com/dnodncslz/image/upload/v1774441027/building_mqyiow.webp" style="height:60px; transform: translateY(-5px);">
-        <img src="YOUR_5TH_IMAGE_URL" style="height:60px; transform: translateY(-5px);">
+            <img src="https://res.cloudinary.com/dnodncslz/image/upload/v1774440686/ahk_u5d2h6.webp" style="height:75px;">
+            <img src="https://res.cloudinary.com/dnodncslz/image/upload/v1774441251/npca_vypoo6.webp" style="height:75px;">
+            <img src="https://res.cloudinary.com/dnodncslz/image/upload/v1774441161/buildingsmart_d7yder.webp" style="height:75px;">
+            <img src="https://res.cloudinary.com/dnodncslz/image/upload/v1774441027/building_mqyiow.webp" style="height:75px;">
+            <img src="https://res.cloudinary.com/dnodncslz/image/upload/v1774528765/stpi_fbnfw1.webp" style="height:75px;">
+
+            <!-- repeat -->
+            <img src="https://res.cloudinary.com/dnodncslz/image/upload/v1774440686/ahk_u5d2h6.webp" style="height:75px;">
+            <img src="https://res.cloudinary.com/dnodncslz/image/upload/v1774441251/npca_vypoo6.webp" style="height:75px;">
+            <img src="https://res.cloudinary.com/dnodncslz/image/upload/v1774441161/buildingsmart_d7yder.webp" style="height:75px;">
+            <img src="https://res.cloudinary.com/dnodncslz/image/upload/v1774441027/building_mqyiow.webp" style="height:75px;">
+            <img src="https://res.cloudinary.com/dnodncslz/image/upload/v1774528765/stpi_fbnfw1.webp" style="height:75px;">
+
+        </div>
 
     </div>
 
@@ -387,12 +412,369 @@ components.html("""
     100% { transform: translateX(-50%); }
 }
 </style>
-""", height=160)
+""", height=260)
+
+st.markdown("""
+<div style="
+    width:100%;
+    text-align:center;
+    margin-top:60px;
+    font-size:34px;
+    font-family: Georgia, serif;
+    font-weight:700;
+    color:#002366;
+">
+    What We Do
+</div>
+""", unsafe_allow_html=True)
+
+st.markdown("""
+<div style="
+    width:100%;
+    text-align:center;
+    margin-top:10px;
+    font-size:20px;
+    font-family:sans-serif;
+    color:#4a6fa5;   /* 🔵 light dark blue */
+">
+    Adhering to international construction codes and standards, our range of services includes the following.
+""",unsafe_allow_html=True)
+
+
+# ================= BIM SERVICES (NEW SECTION) =================
+
+bim_image_url = "https://res.cloudinary.com/dnodncslz/image/upload/v1774604187/bim_services_pinnacle_infotech_2_zrp9oc.webp"  # 🔥 replace with your image
+# ================= BIM SERVICES (3 COLUMN LAYOUT) =================
+
+# ================= BIM SERVICES (3 COLUMN - BUTTON LEFT) =================
+
+
+components.html(f"""
+<div style='
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:40px;
+    margin-top:40px;
+    width:100%;
+'>
+
+    <!-- LEFT TEXT + BUTTON -->
+    <div style='width:30%;'>
+
+        <div style='
+            color:#4a6fa5;
+            font-size:26px;
+            font-weight:700;
+            font-family: Georgia, serif;
+            margin-bottom:15px;
+        '>
+            BIM Services
+        </div>
+
+        <p style='
+            font-size:15px;
+            line-height:1.6;
+            color:#333;
+            margin-bottom:20px;   /* 🔥 space before button */
+        '>
+        We provide intelligent BIM solutions that improve coordination,
+        reduce risks, and enhance overall project efficiency.
+        </p>
+
+        <!-- 🔥 BUTTON MOVED HERE -->
+        <a href="#" style="
+            display:inline-block;
+            background:#002366;
+            color:white;
+            padding:10px 24px;
+            border-radius:8px;
+            text-decoration:none;
+        ">
+            Know More →
+        </a>
+
+    </div>
+
+    <!-- CENTER IMAGE -->
+    <div style='width:30%; display:flex; justify-content:center;'>
+
+        <img src="{bim_image_url}"
+             style='
+                width:100%;
+                height:320px;
+                object-fit:cover;
+                border-radius:12px;
+             ' />
+
+    </div>
+
+    <!-- RIGHT TEXT -->
+    <div style='width:30%;'>
+
+        <p style='
+            font-size:15px;
+            line-height:1.6;
+            color:#333;
+        '>
+        Our BIM expertise ensures seamless collaboration across design,
+        construction, and facility management for better outcomes.
+        </p>
+
+    </div>
+
+</div>
+""", height=400)
+
+
+     
+      
+  
 
 
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+            
+
+
+
+
+
+
+
+
+    
+
+
+
+
+# ================= ENGINEERING DESIGN SECTION =================
+
+# ================= ENGINEERING DESIGN SECTION =================
+# ================= ENGINEERING DESIGN (3 COLUMN) =================
+
+eng_image_url = "https://res.cloudinary.com/dnodncslz/image/upload/v1774604330/engineering_design_pinnacle_infotech_lbnhpf.webp"
+
+components.html(f"""
+<div style='
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:40px;
+    margin-top:30px;
+    width:100%;
+'>
+
+    <!-- LEFT TEXT + BUTTON -->
+    <div style='width:30%;'>
+
+        <div style='
+            color:#4a6fa5;
+            font-size:26px;
+            font-weight:700;
+            font-family: Georgia, serif;
+            margin-bottom:15px;
+        '>
+            Engineering Design
+        </div>
+
+        <p style='
+            font-size:15px;
+            line-height:1.6;
+            color:#333;
+            margin-bottom:20px;
+        '>
+        We deliver innovative engineering design solutions with precision,
+        ensuring efficiency and sustainability across all projects.
+        </p>
+
+        <a href="#" style="
+            display:inline-block;
+            background:#002366;
+            color:white;
+            padding:10px 24px;
+            border-radius:8px;
+            text-decoration:none;
+        ">
+            Know More →
+        </a>
+
+    </div>
+
+    <!-- CENTER IMAGE -->
+    <div style='width:30%; display:flex; justify-content:center;'>
+
+        <img src="{eng_image_url}"
+             style='
+                width:100%;
+                height:320px;
+                object-fit:cover;
+                border-radius:12px;
+             ' />
+
+    </div>
+
+    <!-- RIGHT TEXT -->
+    <div style='width:30%;'>
+
+        <p style='
+            font-size:15px;
+            line-height:1.6;
+            color:#333;
+        '>
+        Our team integrates modern tools and expertise to deliver accurate,
+        reliable, and high-performance engineering outcomes.
+        </p>
+
+    </div>
+
+</div>
+""", height=400)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+
+
+
+ # ================= DIGITAL CONSTRUCTION SECTION =================
+
+digital_image_url = "https://res.cloudinary.com/dnodncslz/image/upload/v1774604275/digital_construction_pinnacle_infotech_mxz5kc.webp"
+
+# ================= DIGITAL CONSTRUCTION (3 COLUMN) =================
+
+
+components.html(f"""
+<div style='
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:40px;
+    margin-top:30px;
+    width:100%;
+'>
+
+    <!-- LEFT TEXT + BUTTON -->
+    <div style='width:30%;'>
+
+        <div style='
+            color:#4a6fa5;
+            font-size:26px;
+            font-weight:700;
+            font-family: Georgia, serif;
+            margin-bottom:15px;
+        '>
+            Digital Construction
+        </div>
+
+        <p style='
+            font-size:15px;
+            line-height:1.6;
+            color:#333;
+            margin-bottom:20px;
+        '>
+        Our digital construction approach enhances visualization, planning,
+        and execution through advanced technologies and smart workflows.
+        </p>
+
+        <a href="#" style="
+            display:inline-block;
+            background:#002366;
+            color:white;
+            padding:10px 24px;
+            border-radius:8px;
+            text-decoration:none;
+        ">
+            Know More →
+        </a>
+
+    </div>
+
+    <!-- CENTER IMAGE -->
+    <div style='width:30%; display:flex; justify-content:center;'>
+
+        <img src="{digital_image_url}"
+             style='
+                width:100%;
+                height:320px;
+                object-fit:cover;
+                border-radius:12px;
+             ' />
+
+    </div>
+
+    <!-- RIGHT TEXT -->
+    <div style='width:30%;'>
+
+        <p style='
+            font-size:15px;
+            line-height:1.6;
+            color:#333;
+        '>
+        We ensure seamless coordination and efficiency across the entire
+        construction lifecycle using cutting-edge digital tools.
+        </p>
+
+    </div>
+
+</div>
+""", height=400)
+        
+     
+
+       
+          
 
 
 
