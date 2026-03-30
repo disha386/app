@@ -35,23 +35,44 @@ CREATE TABLE IF NOT EXISTS images (
 conn.commit()
 
 # ================= INSERT IMAGES (ONLY ONCE) =================
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
 def insert_image(path):
-    if os.path.exists(path):
-        with open(path, "rb") as f:
+    full_path = os.path.join(BASE_DIR, path)   # 🔥 FIXED PATH
+
+    if os.path.exists(full_path):
+        st.success(f"✅ Found: {full_path}")
+        with open(full_path, "rb") as f:
             cursor.execute("INSERT INTO images (image) VALUES (?)", (f.read(),))
     else:
-        st.error(f"❌ Image not found: {path}")
+        st.error(f"❌ Image not found: {full_path}")
+
+
+
+
+
 
 # Insert only if empty
 cursor.execute("SELECT COUNT(*) FROM images")
 count = cursor.fetchone()[0]
 
+##deploy hide
+
 if count == 0:
+    insert_image("images/header-logo.webp")
     insert_image("images/discover-section-img.webp")
     insert_image("images/ISO1.webp")
     insert_image("images/ISO2.webp")
     insert_image("images/ISO-9001-2015.webp")
     conn.commit()
+cursor.execute("SELECT COUNT(*) FROM images")
+count = cursor.fetchone()[0]
+
+cursor.execute("SELECT id, length(image) FROM images")
+rows = cursor.fetchall()
+
+
+
 
 # ================= GET IMAGES =================
 def get_images():
@@ -61,7 +82,19 @@ def get_images():
 # ================= NAVBAR =================
 # ================= NAVBAR =================
 # ================= NAVBAR =================
-logo_url = "https://res.cloudinary.com/dnodncslz/image/upload/v1774502957/header-logo_rdttb2.webp"
+images = get_images()
+
+logo_base64 = ""
+
+if len(images) > 0:
+    logo_base64 = base64.b64encode(images[0][0]).decode()
+
+
+
+
+
+
+
 components.html(f"""
 <style>
 .navbar {{
@@ -142,7 +175,7 @@ components.html(f"""
 
     <!-- LOGO LEFT -->
     <div class="navbar-left">
-        <img class="logo" src="{logo_url}">
+        <img class="logo" src="data:image/webp;base64,{logo_base64}">
     </div>
 
     <!-- CENTER MENU -->
@@ -194,10 +227,6 @@ st.markdown("""
 
 
 
-import streamlit as st
-import streamlit.components.v1 as components
-
-
 video_url = "https://res.cloudinary.com/dnodncslz/video/upload/v1774435343/pinnacle-infotech-latest_h3qbk3.mp4"
 
 components.html(f"""
@@ -242,11 +271,19 @@ def to_base64(img):
 
 images = get_images()
 
-if len(images) >= 4:
-    main_img = to_base64(images[0][0])
-    iso1 = to_base64(images[1][0])
-    iso2 = to_base64(images[2][0])
-    iso3 = to_base64(images[3][0])
+main_img = iso1 = iso2 = iso3 = ""
+
+if len(images) >= 5:
+    main_img = to_base64(images[1][0])
+    iso1 = to_base64(images[2][0])
+    iso2 = to_base64(images[3][0])
+    iso3 = to_base64(images[4][0])
+
+
+
+
+
+
 html = f"""
 <div style='
     display:flex;
@@ -755,20 +792,29 @@ components.html(f"""
     </div>
 
     <!-- RIGHT TEXT -->
-    <div style='width:30%;'>
+    <!-- RIGHT TEXT -->
+<div style='width:30%;'>
 
-        <p style='
-            font-size:15px;
-            line-height:1.6;
-            color:#333;
-        '>
-        We ensure seamless coordination and efficiency across the entire
-        construction lifecycle using cutting-edge digital tools.
-        </p>
+    <!-- REPLACE PARAGRAPH WITH LIST -->
+    <div style='
+        font-size:15px;
+        color:#333;
+        line-height:2;
+    '>
+
+        <div> 3D Modelling</div>
+        <div> Architectural</div>
+        <div> Marketing/BID Presentation</div>
+        <div> GIS</div>
+        <div>✔ Documentation</div>
 
     </div>
 
 </div>
+
+</div>   
+
+
 """, height=400)
         
      
@@ -790,3 +836,14 @@ components.html(f"""
 
 
 
+
+
+
+
+
+
+        
+
+
+
+ 
