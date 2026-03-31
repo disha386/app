@@ -345,7 +345,7 @@ function toggleDropdown(id) {
 
 html_code = html_code.replace("__LOGO__", logo_base64)
 
-components.html(html_code, height=160)
+components.html(html_code, height=90)
 
 
 
