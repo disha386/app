@@ -89,113 +89,204 @@ logo_base64 = ""
 if len(images) > 0:
     logo_base64 = base64.b64encode(images[0][0]).decode()
 
-
-
-
-
-
-
-components.html(f"""
+html_code = """
 <style>
-.navbar {{
-        display:flex;
-    align-items:center;
-    justify-content:space-between;
-    background:#f8f8f8;
-    padding:10px 25px;
-    font-family:sans-serif;
-}}
+.navbar {
+    display: flex;
+    align-items: center;
+    background: #f8f8f8;
+    padding: 10px 25px;
+    font-family: sans-serif;
+    position: relative;
+    justify-content: space-between;
+}
 
-.navbar-left {{
+.navbar-left {
+    flex: 1;
     display:flex;
     align-items:center;
-}}
-
-.logo {{
-    height:60px;
-}}
-
-
-
-
-/* CENTER MENU */
-.navbar-center {{
-     display:flex;
-    gap:12px;
-    align-items:center;
-}}
+}
+.navbar-center {
+    flex: 1;
+    display: flex;
+    justify-content: center;   
+    gap: 25px;
+    align-items: center;
+}
 
 
-/* RIGHT SIDE */
-.navbar-right {{
-     padding:8px 16px;
-    border-radius:6px;
-    text-decoration:none;
-    font-weight:600;
-}}
 
-/* BUTTONS */
-.navbar-right a {{
-    padding:8px 16px;
-    border-radius:6px;
-    text-decoration:none;
-    font-weight:600;
-}}
 
-.login-btn {{
-    background:white;
-    border:1px solid #ccc;
-    color:black;
-}}
 
-.contact-btn {{
-    background:#ffb900;
-    color:white;
-}}
 
-/* LOGO */
-.logo {{
+
+.logo {
     height:70px;
     object-fit:contain;
-}}
 
-/* ARROW BETWEEN ITEMS */
-.arrow {{
+}
+.navbar-right {
+    flex: 1;
+    display: flex;              
+    justify-content: flex-end;
+    align-items: center;
+    gap: 10px;                  
+}
+.login-btn {
+    background: white;
+    border: 1px solid #ccc;
+    color: black;
+    padding: 10px 20px;     /*  bigger */
+    font-size: 16px;        /*  bigger text */
+    border-radius: 8px;
+}
+
+.contact-btn {
+    background: #ffb900;
+    color: white;
+    padding: 10px 20px;     /*  bigger */
+    font-size: 16px;
+    border-radius: 8px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.arrow {
     width:6px;
     height:6px;
     border-right:2px solid black;
     border-bottom:2px solid black;
-    transform: rotate(45deg);   /* 👈 creates arrow */
+    transform: rotate(45deg);
     margin: 0 6px;
-}}
+    cursor:pointer;
+}
 
+.menu-item {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.menu-item span {
+    white-space: nowrap;
+}
+
+
+
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    top: 25px;
+    left: 0;
+    background: white;
+    min-width: 160px;
+    border-radius: 8px;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+    padding: 10px 0;
+    z-index: 999;
+}
+
+.dropdown-content a {
+    display: block;
+    padding: 10px 15px;
+    text-decoration: none;
+    color: black;
+}
+
+.dropdown-content a:hover {
+    background: #f2f2f2;
+}
 </style>
 
 <div class="navbar">
 
-    <!-- LOGO LEFT -->
+    <!-- LOGO -->
     <div class="navbar-left">
-        <img class="logo" src="data:image/webp;base64,{logo_base64}">
+        <img class="logo" src="data:image/webp;base64,__LOGO__">
     </div>
 
-    <!-- CENTER MENU -->
+    <!-- MENU -->
     <div class="navbar-center">
 
-    <span>Home</span>
-    <span class="arrow"></span>
 
-    <span>About Us</span>
-    <span class="arrow"></span>
+    <!-- HOME -->
+    <div class="menu-item">
+        <span>Home</span>
+        <span class="arrow" onclick="toggleDropdown('home')"></span>
+        <div id="home" class="dropdown-content">
+            <a href="#">Overview</a>
+            <a href="#">Updates</a>
+        </div>
+    </div>
 
-    <span>Career</span>
-    <span class="arrow"></span>
+    <!-- ABOUT -->
+    <div class="menu-item">
+        <span>About Us</span>
+        <span class="arrow" onclick="toggleDropdown('about')"></span>
+        <div id="about" class="dropdown-content">
+            <a href="#">Our Story</a>
+            <a href="#">Team</a>
+        </div>
+    </div>
 
-    <span>Resources</span>
-    <span class="arrow"></span>
+    <!-- CAREER -->
+    <div class="menu-item">
+        <span>Career</span>
+        <span class="arrow" onclick="toggleDropdown('career')"></span>
+        <div id="career" class="dropdown-content">
+            <a href="#">Jobs</a>
+            <a href="#">Internships</a>
+        </div>
+    </div>
 
-    <span>Blog</span>
+    <!-- RESOURCES -->
+    <div class="menu-item">
+        <span>Resources</span>
+        <span class="arrow" onclick="toggleDropdown('resources')"></span>
+        <div id="resources" class="dropdown-content">
+            <a href="#">Case Studies</a>
+            <a href="#">Downloads</a>
+        </div>
+    </div>
+
+    <!-- BLOG -->
+    <div class="menu-item">
+        <span>Blog</span>
+        <span class="arrow" onclick="toggleDropdown('blog')"></span>
+        <div id="blog" class="dropdown-content">
+            <a href="#">Latest Posts</a>
+            <a href="#">News</a>
+        </div>
+    </div>
 
 </div>
+        
+            
+
+
+
+
+
+
+
+
+
 
     <!-- RIGHT BUTTONS -->
     <div class="navbar-right">
@@ -204,12 +295,60 @@ components.html(f"""
     </div>
 
 </div>
-""", height=90)
-######  content
+
+<script>
+function toggleDropdown(id) {
+
+    var all = document.getElementsByClassName("dropdown-content");
+
+    for (var i = 0; i < all.length; i++) {
+        if (all[i].id !== id) {
+            all[i].style.display = "none";
+        }
+    }
+
+    var dropdown = document.getElementById(id);
+
+    if (dropdown.style.display === "block") {
+        dropdown.style.display = "none";
+    } else {
+        dropdown.style.display = "block";
+    }
+}
+</script>
+"""
+
+html_code = html_code.replace("__LOGO__", logo_base64)
+
+components.html(html_code, height=160)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+######  PAGE CONTENT
 st.markdown("""
 <div style="
     margin-top:20px;
-    padding-left:25px;   /* 🔥 MATCH NAVBAR */
+    padding-left:25px;   /* MATCH NAVBAR */
     width:100%;
     font-size:52px;
     font-family: Georgia, serif;
