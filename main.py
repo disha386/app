@@ -33,15 +33,43 @@ CREATE TABLE IF NOT EXISTS images (
 )
 """)
 conn.commit()
+cursor.execute("""
+CREATE TABLE IF NOT EXISTS navbar (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT,
+    option1 TEXT,
+    option2 TEXT
+)
+""")
+conn.commit()
+# INSERT MENU DATA (ONLY ONCE)
+cursor.execute("SELECT COUNT(*) FROM navbar")
+count = cursor.fetchone()[0]
+
+if count == 0:
+    cursor.execute("INSERT INTO navbar (name, option1, option2) VALUES (?, ?, ?)", 
+                   ("Home", "Overview", "Updates"))
+    cursor.execute("INSERT INTO navbar (name, option1, option2) VALUES (?, ?, ?)", 
+                   ("About Us", "Our Story", "Team"))
+    cursor.execute("INSERT INTO navbar (name, option1, option2) VALUES (?, ?, ?)", 
+                   ("Career", "Jobs", "Internships"))
+    cursor.execute("INSERT INTO navbar (name, option1, option2) VALUES (?, ?, ?)", 
+                   ("Resources", "Case Studies", "Downloads"))
+    cursor.execute("INSERT INTO navbar (name, option1, option2) VALUES (?, ?, ?)", 
+                   ("Blog", "Latest Posts", "News"))
+    conn.commit()
+
+
+
 
 # ================= INSERT IMAGES (ONLY ONCE) =================
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 def insert_image(path):
-    full_path = os.path.join(BASE_DIR, path)   # 🔥 FIXED PATH
+    full_path = os.path.join(BASE_DIR, path)   #  FIXED PATH
 
     if os.path.exists(full_path):
-        st.success(f"✅ Found: {full_path}")
+        st.success(f" Found: {full_path}")
         with open(full_path, "rb") as f:
             cursor.execute("INSERT INTO images (image) VALUES (?)", (f.read(),))
     else:
@@ -113,9 +141,6 @@ html_code = """
     gap: 25px;
     align-items: center;
 }
-
-
-
 
 
 
