@@ -26,6 +26,10 @@ footer {visibility: hidden;}
 conn = sqlite3.connect("portal.db", check_same_thread=False)
 cursor = conn.cursor()
 
+
+
+
+
 cursor.execute("""
 CREATE TABLE IF NOT EXISTS images (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -42,6 +46,18 @@ CREATE TABLE IF NOT EXISTS navbar (
 )
 """)
 conn.commit()
+# CREATE TABLE
+cursor.execute("""
+CREATE TABLE IF NOT EXISTS ui_components (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT,
+    type TEXT,
+    content TEXT
+)
+""")
+conn.commit()
+
+
 # INSERT MENU DATA (ONLY ONCE)
 cursor.execute("SELECT COUNT(*) FROM navbar")
 count = cursor.fetchone()[0]
@@ -59,6 +75,259 @@ if count == 0:
                    ("Blog", "Latest Posts", "News"))
     conn.commit()
 
+######### NEW TABLE FOR HTML###############
+# ================= NAVBAR HTML =================
+
+cursor.execute("SELECT COUNT(*) FROM ui_components WHERE name='navbar' AND type='html'")
+count = cursor.fetchone()[0]
+
+if count == 0:
+    #  FIRST TIME INSERT
+    cursor.execute("""
+    INSERT INTO ui_components (name, type, content)
+    VALUES (?, ?, ?)
+    """, ("navbar", "html", """
+
+<!--  NEW DROPDOWN HTML -->
+<div class="navbar">
+
+    <div class="navbar-left">
+        <img class="logo" src="data:image/webp;base64,__LOGO__">
+    </div>
+
+    <div class="navbar-center">
+
+        <div class="menu-item">
+            <span>Home</span>
+            <span class="arrow" onclick="toggleDropdown('home')"></span>
+            <div id="home" class="dropdown-content">
+                <a href="#">Overview</a>
+                <a href="#">Updates</a>
+            </div>
+        </div>
+
+        <div class="menu-item">
+            <span>About Us</span>
+            <span class="arrow" onclick="toggleDropdown('about')"></span>
+            <div id="about" class="dropdown-content">
+                <a href="#">Our Story</a>
+                <a href="#">Team</a>
+            </div>
+        </div>
+
+        <div class="menu-item">
+            <span>Career</span>
+            <span class="arrow" onclick="toggleDropdown('career')"></span>
+            <div id="career" class="dropdown-content">
+                <a href="#">Jobs</a>
+                <a href="#">Internships</a>
+            </div>
+        </div>
+
+        <div class="menu-item">
+            <span>Resources</span>
+            <span class="arrow" onclick="toggleDropdown('resources')"></span>
+            <div id="resources" class="dropdown-content">
+                <a href="#">Case Studies</a>
+                <a href="#">Downloads</a>
+            </div>
+        </div>
+
+        <div class="menu-item">
+            <span>Blog</span>
+            <span class="arrow" onclick="toggleDropdown('blog')"></span>
+            <div id="blog" class="dropdown-content">
+                <a href="#">Latest Posts</a>
+                <a href="#">News</a>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="navbar-right">
+        <a class="login-btn" href="#">Login</a>
+        <a class="contact-btn" href="#">Get in Touch</a>
+    </div>
+
+</div>
+
+"""))
+    conn.commit()
+
+# ================= INSERT NAVBAR CSS =================
+cursor.execute("SELECT COUNT(*) FROM ui_components WHERE name='navbar' AND type='css'")
+count = cursor.fetchone()[0]
+
+if count == 0:     
+    cursor.execute("""
+    INSERT INTO ui_components (name, type, content)
+    VALUES (?, ?, ?)
+    """, ("navbar", "css", """
+<style>
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #f8f8f8;   /* back to light */
+    padding: 10px 25px;
+    font-family: sans-serif;
+    color: black;          /*  text back to black */
+}
+
+.navbar-left {
+    flex: 1;
+}
+
+.navbar-center {
+    flex: 2;
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+    align-items: center;
+}
+
+.navbar-right {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+.logo {
+    height: 50px;
+}
+
+/* MENU */
+    .menu-item {
+    position: relative;
+    cursor: pointer;
+    padding: 5px 0;
+}
+.menu-item:hover .dropdown-content {
+    display: block;
+}
+
+
+
+
+
+/* DROPDOWN */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    top: 100%;   /*  CHANGE from 35px */
+    left: 0;
+    background: white;
+    color: black;
+    min-width: 150px;
+    box-shadow: 0px 4px 10px rgba(0,0,0,0.2);
+    border-radius: 5px;
+    z-index: 9999;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+.dropdown-content a {
+    display: block;
+    padding: 10px;
+    text-decoration: none;
+    color: black;
+}
+
+.dropdown-content a:hover {
+    background: #f2f2f2;
+}
+
+/*  ARROW FIX */
+.arrow {
+    display: inline-block;
+    margin-left: 6px;
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 6px solid black;   /*  FIX */
+    cursor: pointer;
+}
+
+
+/* BUTTONS */
+.login-btn {
+    padding: 8px 16px;
+    border: 1px solid #ccc;
+    background: white;
+    color: black;
+}
+
+.contact-btn {
+    padding: 8px 16px;
+    background: orange;
+    color: white;
+}
+</style>
+
+
+
+
+"""))
+    conn.commit()
+
+
+# ================= INSERT NAVBAR JS =================
+cursor.execute("SELECT COUNT(*) FROM ui_components WHERE name='navbar' AND type='js'")
+count = cursor.fetchone()[0]
+
+if count == 0:
+    cursor.execute("""
+    INSERT INTO ui_components (name, type, content)
+    VALUES (?, ?, ?)
+    """, ("navbar", "js", """
+<script>
+function toggleDropdown(id) {
+
+    var all = document.getElementsByClassName("dropdown-content");
+
+    for (var i = 0; i < all.length; i++) {
+        if (all[i].id !== id) {
+            all[i].style.display = "none";
+        }
+    }
+
+    var dropdown = document.getElementById(id);
+
+    if (dropdown.style.display === "block") {
+        dropdown.style.display = "none";
+    } else {
+        dropdown.style.display = "block";
+    }
+}
+</script>
+"""))
+    conn.commit()
+
+
+def get_component(name, type_):
+    cursor.execute(
+        "SELECT content FROM ui_components WHERE name=? AND type=?",
+        (name, type_)
+    )
+    result = cursor.fetchone()
+    return result[0] if result else ""
+
+
+
+
+
+
 
 
 
@@ -74,9 +343,6 @@ def insert_image(path):
             cursor.execute("INSERT INTO images (image) VALUES (?)", (f.read(),))
     else:
         st.error(f"❌ Image not found: {full_path}")
-
-
-
 
 
 
@@ -114,252 +380,17 @@ images = get_images()
 
 logo_base64 = ""
 
+html_part = get_component("navbar", "html")
+css_part = get_component("navbar", "css")
+js_part = get_component("navbar", "js")
+
+full_code = css_part + html_part + js_part
+
 if len(images) > 0:
     logo_base64 = base64.b64encode(images[0][0]).decode()
+    full_code = full_code.replace("__LOGO__", logo_base64)
 
-html_code = """
-<style>
-.navbar {
-    display: flex;
-    align-items: center;
-    background: #f8f8f8;
-    padding: 10px 25px;
-    font-family: sans-serif;
-    position: relative;
-    justify-content: space-between;
-}
-
-.navbar-left {
-    flex: 1;
-    display:flex;
-    align-items:center;
-}
-.navbar-center {
-    flex: 1;
-    display: flex;
-    justify-content: center;   
-    gap: 25px;
-    align-items: center;
-}
-
-
-
-
-.logo {
-    height:70px;
-    object-fit:contain;
-
-}
-.navbar-right {
-    flex: 1;
-    display: flex;              
-    justify-content: flex-end;
-    align-items: center;
-    gap: 10px;                  
-}
-.login-btn {
-    background: white;
-    border: 1px solid #ccc;
-    color: black;
-    padding: 10px 20px;     /*  bigger */
-    font-size: 16px;        /*  bigger text */
-    border-radius: 8px;
-}
-
-.contact-btn {
-    background: #ffb900;
-    color: white;
-    padding: 10px 20px;     /*  bigger */
-    font-size: 16px;
-    border-radius: 8px;
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-.arrow {
-    width:6px;
-    height:6px;
-    border-right:2px solid black;
-    border-bottom:2px solid black;
-    transform: rotate(45deg);
-    margin: 0 6px;
-    cursor:pointer;
-}
-
-.menu-item {
-    position: relative;
-    display: flex;
-    align-items: center;
-}
-
-.menu-item span {
-    white-space: nowrap;
-}
-
-
-
-
-.dropdown-content {
-    display: none;
-    position: absolute;
-    top: 25px;
-    left: 0;
-    background: white;
-    min-width: 160px;
-    border-radius: 8px;
-    box-shadow: 0 6px 15px rgba(0,0,0,0.15);
-    padding: 10px 0;
-    z-index: 999;
-}
-
-.dropdown-content a {
-    display: block;
-    padding: 10px 15px;
-    text-decoration: none;
-    color: black;
-}
-
-.dropdown-content a:hover {
-    background: #f2f2f2;
-}
-</style>
-
-<div class="navbar">
-
-    <!-- LOGO -->
-    <div class="navbar-left">
-        <img class="logo" src="data:image/webp;base64,__LOGO__">
-    </div>
-
-    <!-- MENU -->
-    <div class="navbar-center">
-
-
-    <!-- HOME -->
-    <div class="menu-item">
-        <span>Home</span>
-        <span class="arrow" onclick="toggleDropdown('home')"></span>
-        <div id="home" class="dropdown-content">
-            <a href="#">Overview</a>
-            <a href="#">Updates</a>
-        </div>
-    </div>
-
-    <!-- ABOUT -->
-    <div class="menu-item">
-        <span>About Us</span>
-        <span class="arrow" onclick="toggleDropdown('about')"></span>
-        <div id="about" class="dropdown-content">
-            <a href="#">Our Story</a>
-            <a href="#">Team</a>
-        </div>
-    </div>
-
-    <!-- CAREER -->
-    <div class="menu-item">
-        <span>Career</span>
-        <span class="arrow" onclick="toggleDropdown('career')"></span>
-        <div id="career" class="dropdown-content">
-            <a href="#">Jobs</a>
-            <a href="#">Internships</a>
-        </div>
-    </div>
-
-    <!-- RESOURCES -->
-    <div class="menu-item">
-        <span>Resources</span>
-        <span class="arrow" onclick="toggleDropdown('resources')"></span>
-        <div id="resources" class="dropdown-content">
-            <a href="#">Case Studies</a>
-            <a href="#">Downloads</a>
-        </div>
-    </div>
-
-    <!-- BLOG -->
-    <div class="menu-item">
-        <span>Blog</span>
-        <span class="arrow" onclick="toggleDropdown('blog')"></span>
-        <div id="blog" class="dropdown-content">
-            <a href="#">Latest Posts</a>
-            <a href="#">News</a>
-        </div>
-    </div>
-
-</div>
-        
-            
-
-
-
-
-
-
-
-
-
-
-    <!-- RIGHT BUTTONS -->
-    <div class="navbar-right">
-        <a class="login-btn" href="#">Login</a>
-        <a class="contact-btn" href="#">Get in Touch</a>
-    </div>
-
-</div>
-
-<script>
-function toggleDropdown(id) {
-
-    var all = document.getElementsByClassName("dropdown-content");
-
-    for (var i = 0; i < all.length; i++) {
-        if (all[i].id !== id) {
-            all[i].style.display = "none";
-        }
-    }
-
-    var dropdown = document.getElementById(id);
-
-    if (dropdown.style.display === "block") {
-        dropdown.style.display = "none";
-    } else {
-        dropdown.style.display = "block";
-    }
-}
-</script>
-"""
-
-html_code = html_code.replace("__LOGO__", logo_base64)
-
-components.html(html_code, height=145)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+components.html(full_code, height=130)
 
 
 
@@ -521,25 +552,6 @@ Our 30+ years of expertise drive excellence in the Design, Preconstruction, Cons
 """
 
 components.html(html, height=520)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
